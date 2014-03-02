@@ -193,4 +193,23 @@ public class InitialTests {
 		assertEquals(1, ints.size());
 		assertTrue(ints.contains("int1"));
 	}
+
+	@Test
+	public void testAnyWhenAll() throws Exception {
+		//given
+		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph6.xml", null);
+		rmp.loadRules();
+		List<String> props = new ArrayList<String>();
+		props.add("prop1");
+		props.add("prop2");
+		props.add("prop3");
+		
+		// when
+		List<String> ints = rmp.getInts(props);
+		
+		// then
+		assertEquals(1, ints.size());
+		assertTrue(ints.contains("int1"));
+	}
+
 }
