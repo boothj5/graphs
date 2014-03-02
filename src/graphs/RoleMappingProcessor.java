@@ -29,12 +29,12 @@ public class RoleMappingProcessor {
 	    fs.readAll(intRulesFile);
 	}
 
-	public List<String> getInts(List<String> props) {
+	public List<String> getInts(List<String> givenProps) {
 		Set<String> resultSet = new HashSet<String>();
 		List<String> resultList = new ArrayList<String>();
 		
-		for (String prop: props) {
-			Node propNode = intRulesGraph.getNode(prop);
+		for (String givenProp: givenProps) {
+			Node propNode = intRulesGraph.getNode(givenProp);
 			Collection<Edge> leavingEdges = propNode.getLeavingEdgeSet();
 			
 			for (Edge leavingEdge : leavingEdges) {
@@ -42,12 +42,10 @@ public class RoleMappingProcessor {
 				
 				if (isInterimNode(targetNode)) {
 					resultSet.add(leavingEdge.getTargetNode().getId());
-				
-				} else if (isAndNode(targetNode)) {
-					handleAndNode(props, resultSet, leavingEdge, targetNode);
-				
-				} else if (isOrNode(targetNode)) {
-					handleOrNode(props, resultSet, leavingEdge, targetNode);
+				} else if (isAndNode(targetNode) && andNodeSatisified(givenProps, targetNode)) {
+					resultSet.add(leavingEdge.getTargetNode().getLeavingEdge(0).getTargetNode().getId());
+				} else if (isOrNode(targetNode) && orNodeSatisfied(givenProps, targetNode)) {
+					resultSet.add(leavingEdge.getTargetNode().getLeavingEdge(0).getTargetNode().getId());
 				}
 			}
 		}
@@ -57,23 +55,22 @@ public class RoleMappingProcessor {
 		return resultList;
 	}
 
-	private void handleOrNode(List<String> props, Set<String> resultSet,
-			Edge leavingEdge, Node targetNode) {
+	private boolean orNodeSatisfied(List<String> givenProps, Node targetNode) {
 		Collection<Edge> enteringEdges = targetNode.getEnteringEdgeSet();
 		
 		for (Edge enteringEdge : enteringEdges) {
 			Node requiredNode = enteringEdge.getSourceNode();
 			if (isPropertyNode(requiredNode)) {
-				if (props.contains(requiredNode.getId())) {
-					resultSet.add(leavingEdge.getTargetNode().getLeavingEdge(0).getTargetNode().getId());
-					break;
+				if (givenProps.contains(requiredNode.getId())) {
+					return true;
 				}
 			}
 		}
+		
+		return false;
 	}
 
-	private void handleAndNode(List<String> props, Set<String> resultSet,
-			Edge leavingEdge, Node targetNode) {
+	private boolean andNodeSatisified(List<String> givenProps, Node targetNode) {
 		Collection<Edge> enteringEdges = targetNode.getEnteringEdgeSet();
 		Set<String> requiredProperties = new HashSet<String>();
 		
@@ -84,9 +81,7 @@ public class RoleMappingProcessor {
 			}
 		}
 		
-		if (props.containsAll(requiredProperties)) {
-			resultSet.add(leavingEdge.getTargetNode().getLeavingEdge(0).getTargetNode().getId());
-		}
+		return givenProps.containsAll(requiredProperties);
 	}
 
 	private boolean isPropertyNode(Node node) {
