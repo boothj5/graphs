@@ -115,7 +115,7 @@ public class InitialTests {
 	}
 
 	@Test
-	public void testAllWhenNone() throws Exception {
+	public void testAndWhenNone() throws Exception {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph5.xml", null);
 		rmp.loadRules();
@@ -130,7 +130,7 @@ public class InitialTests {
 	}
 
 	@Test
-	public void testAllWhenOne() throws Exception {
+	public void testAndWhenOne() throws Exception {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph5.xml", null);
 		rmp.loadRules();
@@ -146,7 +146,7 @@ public class InitialTests {
 	}
 
 	@Test
-	public void testAllWhenAll() throws Exception {
+	public void testAndWhenAll() throws Exception {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph5.xml", null);
 		rmp.loadRules();
@@ -163,7 +163,7 @@ public class InitialTests {
 	}
 
 	@Test
-	public void testAnyWhenNone() throws Exception {
+	public void testOrWhenNone() throws Exception {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph6.xml", null);
 		rmp.loadRules();
@@ -178,7 +178,7 @@ public class InitialTests {
 	}
 
 	@Test
-	public void testAnyWhenOne() throws Exception {
+	public void testOrWhenOne() throws Exception {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph6.xml", null);
 		rmp.loadRules();
@@ -195,7 +195,7 @@ public class InitialTests {
 	}
 
 	@Test
-	public void testAnyWhenAll() throws Exception {
+	public void testOrWhenAll() throws Exception {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph6.xml", null);
 		rmp.loadRules();

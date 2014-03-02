@@ -14,14 +14,14 @@
     <node id="prop3">
     	<data key="type">property</data>
     </node>
-    <node id="all1">
-    	<data key="type">all</data>
+    <node id="and1">
+    	<data key="type">and</data>
     </node>
     <node id="int1">
     	<data key="type">interim</data>
     </node>
-    <edge id="edge1" source="prop1" target="all1"/>
-    <edge id="edge2" source="prop2" target="all1"/>
-    <edge id="edge3" source="all1" target="int1"/>
+    <edge id="edge1" source="prop1" target="and1"/>
+    <edge id="edge2" source="prop2" target="and1"/>
+    <edge id="edge3" source="and1" target="int1"/>
   </graph>
 </graphml>

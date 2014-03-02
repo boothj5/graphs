@@ -43,11 +43,11 @@ public class RoleMappingProcessor {
 				if (isInterimNode(targetNode)) {
 					resultSet.add(leavingEdge.getTargetNode().getId());
 				
-				} else if (isAllNode(targetNode)) {
-					handleAllNode(props, resultSet, leavingEdge, targetNode);
+				} else if (isAndNode(targetNode)) {
+					handleAndNode(props, resultSet, leavingEdge, targetNode);
 				
-				} else if (isAnyNode(targetNode)) {
-					handleAnyNode(props, resultSet, leavingEdge, targetNode);
+				} else if (isOrNode(targetNode)) {
+					handleOrNode(props, resultSet, leavingEdge, targetNode);
 				}
 			}
 		}
@@ -57,7 +57,7 @@ public class RoleMappingProcessor {
 		return resultList;
 	}
 
-	private void handleAnyNode(List<String> props, Set<String> resultSet,
+	private void handleOrNode(List<String> props, Set<String> resultSet,
 			Edge leavingEdge, Node targetNode) {
 		Collection<Edge> enteringEdges = targetNode.getEnteringEdgeSet();
 		
@@ -72,7 +72,7 @@ public class RoleMappingProcessor {
 		}
 	}
 
-	private void handleAllNode(List<String> props, Set<String> resultSet,
+	private void handleAndNode(List<String> props, Set<String> resultSet,
 			Edge leavingEdge, Node targetNode) {
 		Collection<Edge> enteringEdges = targetNode.getEnteringEdgeSet();
 		Set<String> requiredProperties = new HashSet<String>();
@@ -93,12 +93,12 @@ public class RoleMappingProcessor {
 		return "property".equals(node.getAttribute("type"));
 	}
 
-	private boolean isAllNode(Node node) {
-		return "all".equals(node.getAttribute("type"));
+	private boolean isAndNode(Node node) {
+		return "and".equals(node.getAttribute("type"));
 	}
 
-	private boolean isAnyNode(Node node) {
-		return "any".equals(node.getAttribute("type"));
+	private boolean isOrNode(Node node) {
+		return "or".equals(node.getAttribute("type"));
 	}
 
 	private boolean isInterimNode(Node node) {
