@@ -3,6 +3,7 @@ package graphs;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,88 +16,139 @@ import org.graphstream.stream.file.FileSourceFactory;
 
 public class RoleMappingProcessor {
 
-	String intRulesFile;
-	Graph intRulesGraph;
+	private static final String NODE_TYPE = "type";
+	private static final String NODE_TYPE_INTERIM = "interim";
+	private static final String NODE_TYPE_OR = "or";
+	private static final String NODE_TYPE_AND = "and";
+	private static final String NODE_TYPE_PROPERTY = "property";
+
+	private String intRulesFile;
+	private Graph intRulesGraph;
+	private Set<String> ints;
+	private Set<String> props;
 	
-	public RoleMappingProcessor(String intRules, String roleRules) {
-		intRulesFile = intRules;
+	private Set<String> passedNodes;
+	private Set<String> failedNodes;
+	
+	public RoleMappingProcessor(String intRulesFile, String roleRulesFile) {
+		this.intRulesFile = intRulesFile;
 		intRulesGraph = new DefaultGraph("intRules");
+		passedNodes = new HashSet<String>();
+		failedNodes = new HashSet<String>();
+		ints = new HashSet<String>();
+		props = new HashSet<String>();
+		
 	}
 	
 	public void loadRules() throws Exception {
 	    FileSource fs = FileSourceFactory.sourceFor(intRulesFile);
 	    fs.addSink(intRulesGraph);
 	    fs.readAll(intRulesFile);
+
+	    Iterator<Node> nodeIterator = intRulesGraph.getNodeIterator();
+		while(nodeIterator.hasNext()) {
+			Node node = nodeIterator.next();
+			if (NODE_TYPE_INTERIM.equals(node.getAttribute(NODE_TYPE))) {	
+				ints.add(node.getId());
+			}
+			if (NODE_TYPE_PROPERTY.equals(node.getAttribute(NODE_TYPE))) {	
+				props.add(node.getId());
+			}
+		}
 	}
 
-	public List<String> getInts(List<String> givenProps) {
-		Set<String> resultSet = new HashSet<String>();
+	public List<String> getInts(Set<String> givenProps) {
 		List<String> resultList = new ArrayList<String>();
-		
-		for (String givenProp: givenProps) {
-			Node propNode = intRulesGraph.getNode(givenProp);
-			Collection<Edge> leavingEdges = propNode.getLeavingEdgeSet();
-			
-			for (Edge leavingEdge : leavingEdges) {
-				Node targetNode = leavingEdge.getTargetNode();
-				
-				if (isInterimNode(targetNode)) {
-					resultSet.add(leavingEdge.getTargetNode().getId());
-				} else if (isAndNode(targetNode) && andNodeSatisified(givenProps, targetNode)) {
-					resultSet.add(leavingEdge.getTargetNode().getLeavingEdge(0).getTargetNode().getId());
-				} else if (isOrNode(targetNode) && orNodeSatisfied(givenProps, targetNode)) {
-					resultSet.add(leavingEdge.getTargetNode().getLeavingEdge(0).getTargetNode().getId());
-				}
+
+		for (String property : props) {
+			if (givenProps.contains(property)) {
+				passedNodes.add(property);
+			} else {
+				failedNodes.add(property);
 			}
 		}
 		
-		resultList.addAll(resultSet);
+		for (String interim : ints) {
+			if (reachable(interim)) {
+				resultList.add(interim);
+			}
+		}
 		
 		return resultList;
 	}
-
-	private boolean orNodeSatisfied(List<String> givenProps, Node targetNode) {
-		Collection<Edge> enteringEdges = targetNode.getEnteringEdgeSet();
+	
+	private boolean reachable(String id) {
+		Node node = intRulesGraph.getNode(id);
 		
-		for (Edge enteringEdge : enteringEdges) {
-			Node requiredNode = enteringEdge.getSourceNode();
-			if (isPropertyNode(requiredNode)) {
-				if (givenProps.contains(requiredNode.getId())) {
+		if (NODE_TYPE_INTERIM.equals(node.getAttribute(NODE_TYPE))) {
+			Collection<Edge> enteringEdges = node.getEnteringEdgeSet();
+			for (Edge enteringEdge : enteringEdges) {
+				Node source = enteringEdge.getSourceNode();
+				if (reachable(source.getId())) {
 					return true;
 				}
 			}
+			return false;
 		}
-		
+		if (NODE_TYPE_PROPERTY.equals(node.getAttribute(NODE_TYPE))) {
+			return passedNodes.contains(id);
+		}
+		if (NODE_TYPE_AND.equals(node.getAttribute(NODE_TYPE))) {
+			return evaluateAnd(node);
+		}
+		if (NODE_TYPE_OR.equals(node.getAttribute(NODE_TYPE))) {
+			return evaluateOr(node);
+		}
 		return false;
 	}
 
-	private boolean andNodeSatisified(List<String> givenProps, Node targetNode) {
-		Collection<Edge> enteringEdges = targetNode.getEnteringEdgeSet();
-		Set<String> requiredProperties = new HashSet<String>();
-		
-		for (Edge enteringEdge : enteringEdges) {
-			Node requiredNode = enteringEdge.getSourceNode();
-			if (isPropertyNode(requiredNode)) {
-				requiredProperties.add(requiredNode.getId()); 
-			}
+	private boolean evaluateAnd(Node node) {
+		if (passedNodes.contains(node.getId())) {
+			return true;
+		} else if (failedNodes.contains(node.getId())) {
+			return false;
 		}
 		
-		return givenProps.containsAll(requiredProperties);
+		Collection<Edge> enteringEdges = node.getEnteringEdgeSet();
+		int numEdges = enteringEdges.size();
+		int reachCount = reachCount(enteringEdges);
+		
+		if (reachCount == numEdges) {
+			passedNodes.add(node.getId());
+			return true;
+		} else {
+			failedNodes.add(node.getId());
+			return false;
+		}
 	}
 
-	private boolean isPropertyNode(Node node) {
-		return "property".equals(node.getAttribute("type"));
+	private boolean evaluateOr(Node node) {
+		if (passedNodes.contains(node.getId())) {
+			return true;
+		} else if (failedNodes.contains(node.getId())) {
+			return false;
+		}
+
+		Collection<Edge> enteringEdges = node.getEnteringEdgeSet();
+		int reachCount = reachCount(enteringEdges);
+		
+		if (reachCount > 0) {
+			passedNodes.add(node.getId());
+			return true;
+		} else {
+			failedNodes.add(node.getId());
+			return false;
+		}
 	}
 
-	private boolean isAndNode(Node node) {
-		return "and".equals(node.getAttribute("type"));
-	}
-
-	private boolean isOrNode(Node node) {
-		return "or".equals(node.getAttribute("type"));
-	}
-
-	private boolean isInterimNode(Node node) {
-		return "interim".equals(node.getAttribute("type"));
+	private int reachCount(Collection<Edge> enteringEdges) {
+		int reachCount = 0;
+		for (Edge enteringEdge : enteringEdges) {
+			Node source = enteringEdge.getSourceNode();
+			if (reachable(source.getId())) {
+				reachCount++;
+			}
+		}
+		return reachCount;
 	}
 }

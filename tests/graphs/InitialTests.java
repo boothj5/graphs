@@ -2,15 +2,10 @@ package graphs;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.DefaultGraph;
-import org.graphstream.stream.file.FileSource;
-import org.graphstream.stream.file.FileSourceFactory;
 import org.junit.Test;
 
 public class InitialTests {
@@ -32,7 +27,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph0.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		
 		// when
 		List<String> ints = rmp.getInts(props);
@@ -46,7 +41,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph1.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
 		
 		// when
@@ -62,7 +57,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph2.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
 		
 		// when
@@ -79,7 +74,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph3.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
 		props.add("prop2");
 		
@@ -96,7 +91,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph4.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
 		props.add("prop2");
 		props.add("prop3");
@@ -119,7 +114,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph5.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop3");
 		
 		// when
@@ -134,7 +129,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph5.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
 		props.add("prop3");
 		
@@ -150,7 +145,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph5.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
 		props.add("prop2");
 		
@@ -167,7 +162,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph6.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop3");
 		
 		// when
@@ -182,7 +177,7 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph6.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
 		props.add("prop3");
 		
@@ -199,8 +194,55 @@ public class InitialTests {
 		//given
 		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph6.xml", null);
 		rmp.loadRules();
-		List<String> props = new ArrayList<String>();
+		Set<String> props = new HashSet<String>();
 		props.add("prop1");
+		props.add("prop2");
+		props.add("prop3");
+		
+		// when
+		List<String> ints = rmp.getInts(props);
+		
+		// then
+		assertEquals(1, ints.size());
+		assertTrue(ints.contains("int1"));
+	}
+
+	@Test
+	public void testAndFollowedByOrWhenNone() throws Exception {
+		//given
+		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph7.xml", null);
+		rmp.loadRules();
+		Set<String> props = new HashSet<String>();
+		
+		// when
+		List<String> ints = rmp.getInts(props);
+		
+		// then
+		assertEquals(0, ints.size());
+	}
+
+	@Test
+	public void testAndFollowedByOrWhenFirstSatisfiesOr() throws Exception {
+		//given
+		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph7.xml", null);
+		rmp.loadRules();
+		Set<String> props = new HashSet<String>();
+		props.add("prop1");
+		
+		// when
+		List<String> ints = rmp.getInts(props);
+		
+		// then
+		assertEquals(1, ints.size());
+		assertTrue(ints.contains("int1"));
+	}
+
+	@Test
+	public void testAndFollowedByOrWhenAndSatisfied() throws Exception {
+		//given
+		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/graph7.xml", null);
+		rmp.loadRules();
+		Set<String> props = new HashSet<String>();
 		props.add("prop2");
 		props.add("prop3");
 		

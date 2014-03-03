@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key attr.name="type" attr.type="string" for="node" id="type"/>
+  <graph id="graph" edgedefault="directed">
+    <node id="prop1">
+    	<data key="type">property</data>
+    </node>
+    <node id="prop2">
+    	<data key="type">property</data>
+    </node>
+    <node id="prop3">
+    	<data key="type">property</data>
+    </node>
+    <node id="and1">
+    	<data key="type">and</data>
+    </node>
+    <node id="or1">
+    	<data key="type">or</data>
+    </node>
+    <node id="int1">
+    	<data key="type">interim</data>
+    </node>
+    <edge id="edge1" source="prop1" target="or1"/>
+    <edge id="edge2" source="prop2" target="and1"/>
+    <edge id="edge3" source="prop3" target="and1"/>
+    <edge id="edge4" source="and1" target="or1"/>
+    <edge id="edge5" source="or1" target="int1"/>
+  </graph>
+</graphml>
