@@ -29,7 +29,7 @@ public class BigGraphTest {
 		Set<String> props = new HashSet<String>();
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(0, ints.size());
@@ -44,7 +44,7 @@ public class BigGraphTest {
 		props.add("prop1");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -61,7 +61,7 @@ public class BigGraphTest {
 		props.add("prop2");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -79,7 +79,7 @@ public class BigGraphTest {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -99,7 +99,7 @@ public class BigGraphTest {
 		props.add("prop4");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -120,7 +120,7 @@ public class BigGraphTest {
 		props.add("prop5");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -142,7 +142,7 @@ public class BigGraphTest {
 		props.add("prop6");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(3, ints.size());
@@ -161,7 +161,7 @@ public class BigGraphTest {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -178,7 +178,7 @@ public class BigGraphTest {
 		props.add("prop4");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -196,7 +196,7 @@ public class BigGraphTest {
 		props.add("prop5");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -213,7 +213,7 @@ public class BigGraphTest {
 		props.add("prop6");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -231,7 +231,7 @@ public class BigGraphTest {
 		props.add("prop6");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -249,7 +249,7 @@ public class BigGraphTest {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -267,7 +267,7 @@ public class BigGraphTest {
 		props.add("prop7");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());

@@ -29,7 +29,7 @@ public class InitialTests {
 		Set<String> props = new HashSet<String>();
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(0, ints.size());
@@ -44,7 +44,7 @@ public class InitialTests {
 		props.add("prop1");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -60,7 +60,7 @@ public class InitialTests {
 		props.add("prop1");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -78,7 +78,7 @@ public class InitialTests {
 		props.add("prop2");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -97,7 +97,7 @@ public class InitialTests {
 		props.add("prop4");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(5, ints.size());
@@ -117,7 +117,7 @@ public class InitialTests {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(0, ints.size());
@@ -133,7 +133,7 @@ public class InitialTests {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(0, ints.size());
@@ -149,7 +149,7 @@ public class InitialTests {
 		props.add("prop2");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -165,7 +165,7 @@ public class InitialTests {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(0, ints.size());
@@ -181,7 +181,7 @@ public class InitialTests {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -199,7 +199,7 @@ public class InitialTests {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -214,7 +214,7 @@ public class InitialTests {
 		Set<String> props = new HashSet<String>();
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(0, ints.size());
@@ -229,7 +229,7 @@ public class InitialTests {
 		props.add("prop1");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -246,7 +246,7 @@ public class InitialTests {
 		props.add("prop3");
 		
 		// when
-		Set<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInterims(props);
 		
 		// then
 		assertEquals(1, ints.size());

@@ -55,7 +55,7 @@ public class RoleMappingProcessor {
 		}
 	}
 
-	public Set<String> getInts(Set<String> givenProps) {
+	public Set<String> getInterims(Set<String> givenProps) {
 		Set<String> resultList = new HashSet<String>();
 
 		for (String property : props) {
