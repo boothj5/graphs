@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns
+     http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key attr.name="type" attr.type="string" for="node" id="type"/>
+  <graph id="rolegraph" edgedefault="directed">
+    <node id="int1">
+    	<data key="type">interim</data>
+    </node>
+    <node id="int2">
+    	<data key="type">interim</data>
+    </node>
+    <node id="int3">
+    	<data key="type">interim</data>
+    </node>
+    <node id="int4">
+    	<data key="type">interim</data>
+    </node>
+    <node id="role1">
+    	<data key="type">role</data>
+    </node>
+    <node id="role2">
+    	<data key="type">role</data>
+    </node>
+    <node id="and1">
+    	<data key="type">and</data>
+    </node>
+    <node id="or1">
+    	<data key="type">or</data>
+    </node>
+    <edge id="edge1" source="int1" target="and1"/>
+    <edge id="edge2" source="int2" target="and1"/>
+    <edge id="edge3" source="and1" target="role1"/>
+    <edge id="edge4" source="int3" target="or1"/>
+    <edge id="edge5" source="int4" target="or1"/>
+    <edge id="edge6" source="or1" target="role2"/>
+  </graph>
+</graphml>

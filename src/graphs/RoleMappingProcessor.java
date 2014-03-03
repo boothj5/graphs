@@ -1,10 +1,8 @@
 package graphs;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import org.graphstream.graph.Edge;
@@ -57,8 +55,8 @@ public class RoleMappingProcessor {
 		}
 	}
 
-	public List<String> getInts(Set<String> givenProps) {
-		List<String> resultList = new ArrayList<String>();
+	public Set<String> getInts(Set<String> givenProps) {
+		Set<String> resultList = new HashSet<String>();
 
 		for (String property : props) {
 			if (givenProps.contains(property)) {
@@ -76,7 +74,7 @@ public class RoleMappingProcessor {
 		
 		return resultList;
 	}
-	
+
 	private boolean reachable(String id) {
 		Node node = intRulesGraph.getNode(id);
 		

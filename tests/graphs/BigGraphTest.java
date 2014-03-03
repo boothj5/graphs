@@ -3,7 +3,6 @@ package graphs;
 import static org.junit.Assert.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -30,7 +29,7 @@ public class BigGraphTest {
 		Set<String> props = new HashSet<String>();
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(0, ints.size());
@@ -45,7 +44,7 @@ public class BigGraphTest {
 		props.add("prop1");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -62,7 +61,7 @@ public class BigGraphTest {
 		props.add("prop2");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -80,7 +79,7 @@ public class BigGraphTest {
 		props.add("prop3");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -100,7 +99,7 @@ public class BigGraphTest {
 		props.add("prop4");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -121,7 +120,7 @@ public class BigGraphTest {
 		props.add("prop5");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -143,7 +142,7 @@ public class BigGraphTest {
 		props.add("prop6");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(3, ints.size());
@@ -162,7 +161,7 @@ public class BigGraphTest {
 		props.add("prop3");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -179,7 +178,7 @@ public class BigGraphTest {
 		props.add("prop4");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -197,7 +196,7 @@ public class BigGraphTest {
 		props.add("prop5");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -214,7 +213,7 @@ public class BigGraphTest {
 		props.add("prop6");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(1, ints.size());
@@ -232,7 +231,7 @@ public class BigGraphTest {
 		props.add("prop6");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(2, ints.size());
@@ -250,11 +249,29 @@ public class BigGraphTest {
 		props.add("prop3");
 		
 		// when
-		List<String> ints = rmp.getInts(props);
+		Set<String> ints = rmp.getInts(props);
 		
 		// then
 		assertEquals(2, ints.size());
 		assertTrue(ints.contains("int1"));
 		assertTrue(ints.contains("int2"));
+	}
+
+	@Test
+	public void test13() throws Exception {
+		//given
+		RoleMappingProcessor rmp = new RoleMappingProcessor("rules/big-graph.xml", null);
+		rmp.loadRules();
+		Set<String> props = new HashSet<String>();
+		props.add("prop1");
+		props.add("prop7");
+		
+		// when
+		Set<String> ints = rmp.getInts(props);
+		
+		// then
+		assertEquals(2, ints.size());
+		assertTrue(ints.contains("int1"));
+		assertTrue(ints.contains("int4"));
 	}
 }
